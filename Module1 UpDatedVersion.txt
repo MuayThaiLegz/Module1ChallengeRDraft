@@ -1,0 +1,106 @@
+import csv
+from pathlib import Path
+
+
+loan_costs = [500, 600, 200, 1000, 450]
+
+list_len = len (loan_costs)
+print('the number of loans from the list' ,list_len)
+
+cost= sum (loan_costs)
+print(f"The total value of the all loans, ${cost:.2f}")
+
+ave_loan_price = cost / list_len
+print(f"The average loan amount is ${ave_loan_price:.2f}")
+
+
+
+
+loan = {
+    "loan_price": 500,
+    "remaining_months": 9,
+    "repayment_interval": "bullet",
+    "future_value": 1000,
+}
+
+
+future_value = loan["future_value"]
+discount_rate = 0.20
+remaining_months = loan["remaining_months"]
+
+
+present_value = future_value / (1 + discount_rate / 12) ** remaining_months
+
+
+if present_value > ave_loan_price:
+    print("Our model is evaluating this loan to be worth cost price, with a posible consideable upside ")
+elif present_value < ave_loan_price:
+    print("This loan doesnt not meant the return desire")
+
+
+
+new_loan = {
+    "loan_price": 800,
+    "remaining_months": 12,
+    "repayment_interval": "bullet",
+    "future_value": 1000,
+}
+
+def calculate_discount_rate( future_value, annual_discount_rate, remaining_months):
+    present_value = future_value /(1 + annual_discount_rate)**remaining_months
+present_value
+
+print(f"The present value of the loan is ${present_value:.2f}")
+
+loans = [
+    {
+        "loan_price": 700,
+        "remaining_months": 9,
+        "repayment_interval": "monthly",
+        "future_value": 1000,
+    },
+    {
+        "loan_price": 500,
+        "remaining_months": 13,
+        "repayment_interval": "bullet",
+        "future_value": 1000,
+    },
+    {
+        "loan_price": 200,
+        "remaining_months": 16,
+        "repayment_interval": "bullet",
+        "future_value": 1000,
+    },
+    {
+        "loan_price": 900,
+        "remaining_months": 16,
+        "repayment_interval": "bullet",
+        "future_value": 1000,
+    },
+]
+
+
+inexpensive_loans = []
+for price in loans:
+    if price["loan_price"] <= 500:
+        inexpensive_loans.append(price["loan_price"])
+    
+
+print(f'Our software has evaluated these loans as those with prices meeting our prefrences ' , inexpensive_loans)
+
+
+
+header = ["loan_price", "remaining_months", "payment_interval", "future_value"]
+
+
+output_path = Path("inexpensive_loans.csv")
+
+
+csvpath = Path("inexpensive_loans.csv")
+with open(csvpath, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile)
+    for row in loans:
+        csvwriter.writerow(row.values())
+
+
+
